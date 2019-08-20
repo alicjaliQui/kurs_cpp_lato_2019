@@ -2,6 +2,10 @@
 
 2. How to allocate an int on a stack and on a heap? Give examples.
 
+    int a = 5;
+
+    int * b = new int(5);
+
 3. What is a difference between const pointer and pointer to const? Write down their possible signatures.
 
 4. What is a difference between delete and delete[]? When to use which? Give examples
