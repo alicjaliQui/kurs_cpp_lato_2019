@@ -2,13 +2,9 @@
 #include <iostream>
 #include <string>
 #include <cassert>
-#include <math.h>
 
 struct LongInt
 {
-    //Constructor
-    LongInt() = default;
-
     //Constructor
     LongInt(int left, int right) : left(left), right(right)
     {
@@ -32,26 +28,13 @@ struct LongInt
     //Destructor
     ~LongInt()
     {
+        std::cout << "Delete " << toString() << std::endl;
     }
 
     //Method
-    std::string toString() const
+    std::string toString()
     {
-        std::string long_int_string;
-        std::string left_string = std::to_string(left);
-        std::string right_string = std::to_string(right);
-
-        if(abs(left)) {
-            if(right < 10) {
-                long_int_string = left_string + '0' + right_string;
-            } else {
-                long_int_string =  left_string + right_string;
-            }
-        } else {
-            long_int_string = right_string;
-        }
-
-        return long_int_string;
+        return std::to_string(left) + std::to_string(right);
     }
 
     //Operator
@@ -61,75 +44,6 @@ struct LongInt
         right += r.right;
         left += right / 100;
         right = right % 100;
-    }
-
-    //Operator
-    LongInt operator+(const LongInt& r)
-    {
-        LongInt sum;
-
-        sum.left = left + r.left;
-        sum.right = right + r.right;
-        sum.left += (right / 100);
-        sum.right = right % 100;
-
-        return sum;
-    }
-
-    //Operator
-    void operator-=(const LongInt& r)
-    {
-
-        if(r.left < 0) {
-            left += r.left;
-            right += r.right;
-            left += right / 100;
-            right = right % 100;
-        } else {
-            if(left > r.left) {
-                if((right < r.right) && (left > 0)) {
-                    left -= 1;
-                    right += 100;
-                }
-                left -= r.left;
-                right -= r.right;
-            } else {
-                if((right > r.right) && (r.left > 0)) {
-                    left = -(r.left - left - 1);
-                    right = r.right - right + 100;
-                    if(left == 0) right *= -1;
-                } else {
-                    left = -(r.left - left);
-                    right = r.right - right;
-                }
-            }
-        }
-    }
-
-    //Operator
-    LongInt operator-(const LongInt& r)
-    {
-        LongInt sum;
-
-        if(left > r.left) {
-            if((right < r.right) && (left > 0)) {
-                sum.left = left - 1;
-                sum.right = right + 100;
-            }
-            sum.left = left - r.left;
-            sum.right = right - r.right;
-        } else {
-            if((right > r.right) && (r.left > 0)) {
-                sum.left = -(r.left - left - 1);
-                sum.right = r.right - right + 100;
-                if(left == 0) sum.right *= -1;
-            } else {
-                sum.left = -(r.left - left);
-                sum.right = r.right - right;
-            }
-        }
-
-        return sum;
     }
 
     //Copy operator
@@ -145,81 +59,11 @@ struct LongInt
     int right;
 };
 
-std::ostream & operator<<(std::ostream& os, const LongInt& l)
-{
-    return os << l.toString();
-}
-
-std::istream& operator>>(std::istream& is, LongInt& l)
-{
-    std::string input;
-    is >> input;
-    l = static_cast<LongInt>(input);
-
-    return is;
-}
-
 int main()
 {
     LongInt val1(1, 70);
     LongInt val2("5980");
-    LongInt v1(0, 0);
-    LongInt v2(0, 10);
-    LongInt v3(30, 1);
-    LongInt v4(-30, 1);
-    LongInt v5;
-
 
     val1 += val2;
-    std::cout << val1 << std::endl;
-    std::cin >> val1;
-    std::cout << val1 << std::endl;
-
-    LongInt l(2, 10);
-    LongInt l_copy(2, 10);
-    LongInt r1(1, 0);
-    LongInt r2(1, 20);
-    LongInt r3(3, 0);
-    LongInt r4(3, 20);
-
-    l -= r1;
-    std::cout << l.toString() << std::endl;
-    l = l_copy;
-
-    l -= r2;
-    std::cout << l.toString() << std::endl;
-    l = l_copy;
-
-    l -= r3;
-    std::cout << l.toString() << std::endl;
-    l = l_copy;
-
-    l -= r4;
-    std::cout << l.toString() << std::endl;
-    l = l_copy;
-
-    LongInt sum, sum1;
-
-    sum = l + r1;
-    std::cout << sum.toString() << std::endl;
-
-    std::cout << sum.toString() << std::endl;
-    std::cout << l.toString() << std::endl;
-    std::cout << r1.toString() << std::endl;
-
-    sum1 = l - r1;
-    std::cout << sum1.toString() << std::endl;
-
-
-    LongInt a(-2, 0);
-    LongInt b(-1, 0);
-    LongInt c(-1, 20);
-    LongInt val;
-
-    val = a - b;
-    std::cout << val.toString() << std::endl;
-    val = a - c;
-    std::cout << val.toString() << std::endl;
-
-
+    std::cout << val1.toString() << std::endl;
 }
